@@ -1,6 +1,7 @@
 const UserModel=require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const helpers=require("../utils/helpersFunction");
+const jwt=require("jsonwebtoken");
 
 class UserController{
     async CreateNewAdmin(email, password) {
@@ -54,6 +55,41 @@ async CreateNewUser(email, password) {
         throw error
     }
    }
+
+    async Login(req, res){
+        try {
+            const body=req.body;
+            if (body.email===" " ||body.email===undefined) {
+                throw new Error("Debe enviar un email")
+            }
+            if (body.password===" "|| body.password===undefined) {
+                throw new Error("Debe enviar un password")
+            }
+
+            const user=await UserModel.findOne({email:body.email});
+
+            if (user===null) {
+              return  res.status(404).json({message: "Email y/o password incorrectos"})
+            };
+
+            const compare= await bcrypt.compare(body.password, user.password);
+
+            if (!compare) {
+               return res.status(404).json({message: "Email y/o password incorrectos"})
+            }    
+
+            const token=jwt.sign({
+                _id:user._id,
+                role:user.role
+            }, process.env.SECRET_KEY, {expiresIn:"1D"} )
+            
+            return res.status(200).json({email:user.email, role:user.role, token:token});
+
+        } catch (error) {
+            throw error
+        }
+    }
+     
  };
 
 
