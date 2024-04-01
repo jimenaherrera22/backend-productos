@@ -1,4 +1,5 @@
-const UserController=require("../controllers/userController")
+const UserController=require("../controllers/userController");
+const Auth=require("../utils/AuthMiddlewares")
 
 const UserRoutes=(base, app)=>{
     const controller= new UserController();
@@ -14,7 +15,7 @@ const UserRoutes=(base, app)=>{
     });
 
     
-    app.post(`${base}`, async(req, res)=>{
+    app.post(`${base}`, Auth.isAuth, Auth.isAdmin, async(req, res)=>{
         try {
            const{email, password}=req.body;
            await controller.CreateNewUser(email, password);
