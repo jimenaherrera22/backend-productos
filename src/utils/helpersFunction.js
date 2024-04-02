@@ -9,4 +9,25 @@ function validatePassword(password){
     return  regexPassword.test(password)
 }
 
-module.exports={validateEmail, validatePassword}
+function validateTitle(title) {
+    if (title.length>=4 && title.length<=20) {
+        return true
+    }else{
+        return false
+    }
+}
+    function validateDescription(str) {
+        if (str.length>=4 && str.length<=200) {
+            return true
+        }else{
+            return false
+        }
+}
+function validateCategory(str) {
+    if (str!==undefined) {
+        return true
+    }else{
+        return false
+    }
+}
+module.exports={validateEmail, validatePassword, validateTitle, validateDescription, validateCategory}

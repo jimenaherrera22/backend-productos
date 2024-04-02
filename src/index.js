@@ -4,6 +4,7 @@ const morgan=require("morgan");
 const path=require("path");
 const databaseConnection=require("./databaseConnection.js")
 const UserRoutes=require("./routes/UserRoutes.js")
+const ProductRoutes=require("./routes/ProductRoutes.js")
 //crear una instancia de express
 const app=express();
 //configuramos el acceso a las variables de entorno
@@ -52,4 +53,5 @@ app.get("/test", async(req, res, next)=>{
     }
 })
 
-UserRoutes("/users", app)
+UserRoutes("/users", app);
+ProductRoutes("/products", app);
