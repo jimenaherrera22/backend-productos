@@ -60,9 +60,18 @@ class ProductController{
 
     async UpdateProduct(product){
         try {
+            //AQUI TENDRIAMOS QUE APLICAR LAS MISMAS VALIDACIONES QUE EN EL CREATE
             await ProductModel.findByIdAndUpdate(product._id, product)
         } catch (error) {
             throw(error)
+        }
+    }
+
+    async DeleteProduct(id){
+        try {
+            await ProductModel.findByIdAndDelete(id)
+        } catch (error) {
+            throw error
         }
     }
 };

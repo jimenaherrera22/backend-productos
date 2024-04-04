@@ -46,7 +46,18 @@ const ProductRoutes=(base, app)=>{
             return res.status(200).json({message:"Exito"})
         } catch (error) {
             console.error("Error al actualizar un producto", error);
-            return res.status(500).json({message: "Error al aintentar actualizar el producto"});
+            return res.status(500).json({message: "Error al intentar actualizar el producto"});
+        }
+    })
+
+    app.delete(`${base}/:id`, Auth.isAuth, Auth.isAdmin, async(req, res)=>{
+        try {
+            const {id}=req.params;
+            await controller.DeleteProduct(id);
+            return res.status(200).json({message: "Exito"})
+        } catch (error) {
+            console.error("Error al eliminar un producto", error);
+            return res.status(500).json({message: "Error al intentar eliminar el producto"});
         }
     })
 }
