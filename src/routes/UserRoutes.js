@@ -46,6 +46,7 @@ const UserRoutes=(base, app)=>{
             next(error)
         }
     })
+
 };
 
 module.exports=UserRoutes;
